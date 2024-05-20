@@ -4447,7 +4447,7 @@ THE SOFTWARE.
 
 				tweet_list = to_array( node.querySelectorAll( article_selector ) ).filter( ( article ) => {
 					if ( ( ( article.getAttribute( 'data-testid' ) == 'tweet' ) || article.querySelector( 'div[data-testid="tweet"]' ) ) && article.querySelector( 'div[aria-label] > img' ) ) {
-						if ( ! article.querySelector( 'a[role="link"][href$="/photo/1"]' ) ) {
+						if ( ! article.querySelector( 'a[role="link"][href*="/photo/"]' ) ) {
 							return false;
 						}
 						return ( !! add_open_button( article ) );
