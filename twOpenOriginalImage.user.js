@@ -5,11 +5,11 @@
 // @author          furyu
 // @license         MIT
 // @version         0.1.16
-// @include         http://twitter.com/*
-// @include         https://twitter.com/*
-// @include         https://mobile.twitter.com/*
+// @include         http://x.com/*
+// @include         https://x.com/*
+// @include         https://mobile.x.com/*
 // @include         https://pbs.twimg.com/media/*
-// @include         https://tweetdeck.twitter.com/*
+// @include         https://tweetdeck.x.com/*
 // @grant           GM_getValue
 // @grant           GM_setValue
 // @grant           GM_registerMenuCommand
@@ -18,7 +18,7 @@
 // @require         https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.4/jszip.min.js
 // @require         https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.3/FileSaver.min.js
 // @require         https://cdn.jsdelivr.net/gh/sizzlemctwizzle/GM_config@43fd0fe4de1166f343883511e53546e87840aeaf/gm_config.js
-// @connect         twitter.com
+// @connect         x.com
 // @connect         twimg.com
 // @connect         furyutei.github.io
 // @description     Open images in original size on Twitter.
@@ -38,28 +38,28 @@
 ■ 参考元
 - [GoogleChrome拡張機能「twitter画像原寸ボタン」ver. 2.0公開 - hogashi.*](http://hogashi.hatenablog.com/entry/2016/01/01/234632)
   [hogashi/twitterOpenOriginalImage](https://github.com/hogashi/twitterOpenOriginalImage)
-	The MIT License (MIT)
-	Copyright (c) hogas [@hogextend](https://twitter.com/hogextend)
-	[twitterOpenOriginalImage/LICENSE](https://github.com/hogashi/twitterOpenOriginalImage/blob/master/LICENSE)
+    The MIT License (MIT)
+    Copyright (c) hogas [@hogextend](https://x.com/hogextend)
+    [twitterOpenOriginalImage/LICENSE](https://github.com/hogashi/twitterOpenOriginalImage/blob/master/LICENSE)
 
 ■ 外部ライブラリ
 - [JSZip](https://stuk.github.io/jszip/)
-	Copyright (c) 2009-2014 Stuart Knightley, David Duponchel, Franz Buchinger, António Afonso
-	The MIT License
-	[jszip/LICENSE.markdown](https://github.com/Stuk/jszip/blob/master/LICENSE.markdown)
+    Copyright (c) 2009-2014 Stuart Knightley, David Duponchel, Franz Buchinger, António Afonso
+    The MIT License
+    [jszip/LICENSE.markdown](https://github.com/Stuk/jszip/blob/master/LICENSE.markdown)
 
 - [eligrey/FileSaver.js: An HTML5 saveAs() FileSaver implementation](https://github.com/eligrey/FileSaver.js/)
-	Copyright © 2015 Eli Grey.
-	The MIT License
-	[FileSaver.js/LICENSE.md](https://github.com/eligrey/FileSaver.js/blob/master/LICENSE.md)
+    Copyright © 2015 Eli Grey.
+    The MIT License
+    [FileSaver.js/LICENSE.md](https://github.com/eligrey/FileSaver.js/blob/master/LICENSE.md)
 
 
 - [sizzlemctwizzle/GM_config: A lightweight, reusable, cross-browser graphical settings framework for inclusion in user scripts.](https://github.com/sizzlemctwizzle/GM_config)
-	[GNU Lesser General Public License v3.0](https://github.com/sizzlemctwizzle/GM_config/blob/master/LICENSE)
-	- [About | GM_config | Libraries | OpenUserJS](https://openuserjs.org/libs/sizzle/GM_config)
-	  - https://openuserjs.org/src/libs/sizzle/GM_config.min.js
-	- [sizzlemctwizzle/GM_config CDN by jsDelivr - A CDN for npm and GitHub](https://www.jsdelivr.com/package/gh/sizzlemctwizzle/GM_config)
-	  - https://cdn.jsdelivr.net/gh/sizzlemctwizzle/GM_config@43fd0fe4de1166f343883511e53546e87840aeaf/gm_config.js
+    [GNU Lesser General Public License v3.0](https://github.com/sizzlemctwizzle/GM_config/blob/master/LICENSE)
+    - [About | GM_config | Libraries | OpenUserJS](https://openuserjs.org/libs/sizzle/GM_config)
+      - https://openuserjs.org/src/libs/sizzle/GM_config.min.js
+    - [sizzlemctwizzle/GM_config CDN by jsDelivr - A CDN for npm and GitHub](https://www.jsdelivr.com/package/gh/sizzlemctwizzle/GM_config)
+      - https://cdn.jsdelivr.net/gh/sizzlemctwizzle/GM_config@43fd0fe4de1166f343883511e53546e87840aeaf/gm_config.js
 */
 
 /*
@@ -116,8 +116,8 @@ THE SOFTWARE.
 	}
 
 
-	if ( /^https:\/\/twitter\.com\/i\/cards/.test( w.location.href ) ) {
-		// https://twitter.com/i/cards/～ では実行しない
+	if ( /^https:\/\/x\.com\/i\/cards/.test( w.location.href ) ) {
+		// https://x.com/i/cards/～ では実行しない
 		return;
 	}
 
@@ -166,8 +166,8 @@ THE SOFTWARE.
 			};
 		}, // end of make_is_url_function()
 
-		is_twitter = make_is_url_function( /^https?:\/\/(?:mobile\.)?twitter\.com\// ),
-		is_tweetdeck = make_is_url_function( /^https?:\/\/tweetdeck\.twitter\.com\// ),
+		is_twitter = make_is_url_function( /^https?:\/\/(?:mobile\.)?x\.com\// ),
+		is_tweetdeck = make_is_url_function( /^https?:\/\/tweetdeck\.x\.com\// ),
 		is_media_url = make_is_url_function( /^https?:\/\/pbs\.twimg\.com\/media\// ),
 		is_react_page = ( () => {
 			const
@@ -207,7 +207,7 @@ THE SOFTWARE.
 
 			if ( is_twitter() ) {
 				try {
-					// twitter.com の場合は、サイトの言語設定に従う
+					// x.com の場合は、サイトの言語設定に従う
 					lang = d.querySelector( 'html' ).getAttribute( 'lang' );
 				}
 				catch ( error ) {
@@ -844,7 +844,7 @@ THE SOFTWARE.
 
 
 	function get_img_url_orig( img_url ) {
-		if ( /^https?:\/\/ton\.twitter\.com\//.test( img_url ) ) {
+		if ( /^https?:\/\/ton\.x\.com\//.test( img_url ) ) {
 			// DM の画像は :orig が付かないものが最大
 			return get_img_url( img_url );
 		}
@@ -873,7 +873,7 @@ THE SOFTWARE.
 
 
 	function get_tweet_id_from_tweet_url( tweet_url ) {
-		if ( tweet_url.match( /^(?:https?:\/\/(?:mobile\.)?twitter\.com)?\/[^\/]+\/status(?:es)?\/(\d+).*$/ ) ) {
+		if ( tweet_url.match( /^(?:https?:\/\/(?:mobile\.)?x\.com)?\/[^\/]+\/status(?:es)?\/(\d+).*$/ ) ) {
 			return RegExp.$1;
 		}
 		return null;
@@ -924,7 +924,7 @@ THE SOFTWARE.
 		// ※ [2019.08.07] article[data-testid="tweetDetail"] は無くなり、article[role="article"] に置き換わっている
 		//return ! tweet.querySelector( 'a[role="link"][href^="/"][href*="/status/"] time' );
 		// ※ TODO: 個別ツイートを判別方法要検討（暫定的に、個別ツイートへのリンク(タイムスタンプ)有無で判定）
-		//return !! tweet.querySelector('a[role="link"][href*="/status/"] ~ a[role="link"][href*="/help.twitter.com/"]');
+		//return !! tweet.querySelector('a[role="link"][href*="/status/"] ~ a[role="link"][href*="/help.x.com/"]');
 		// [2022.09] 個別ツイートでも 'a[role="link"][href^="/"][href*="/status/"] time' でマッチするようになったため、判定方法変更
 		const
 			location_tweet_id = get_tweet_id_from_tweet_url( location.href ),
@@ -933,7 +933,7 @@ THE SOFTWARE.
 			tweet_id = get_tweet_id_from_tweet_url( tweet_link?.href ?? '' );
 		log_debug( ( location_tweet_id == tweet_id ), `location_tweet_id=${location_tweet_id} vs tweet_id=${tweet_id}` );
 		return ( ( location_tweet_id ) && ( tweet_id ) && ( location_tweet_id == tweet_id ) );
-		// [2023.08] a[role="link"][href*="/help.twitter.com/"]が存在しなくなっている／自身へのリンクは存在
+		// [2023.08] a[role="link"][href*="/help.x.com/"]が存在しなくなっている／自身へのリンクは存在
 	} // end of is_tweet_detail_on_react_twitter()
 
 
@@ -941,8 +941,8 @@ THE SOFTWARE.
 		var tweet_link,
 			timestamp_container = tweet.querySelector( [
 				'a[role="link"][href^="/"][href*="/status/"] time:last-of-type',
-				'a[role="link"][href^="https://twitter.com/"][href*="/status/"] time:last-of-type',
-				'a[role="link"][href^="https://mobile.twitter.com/"][href*="/status/"] time:last-of-type',
+				'a[role="link"][href^="https://x.com/"][href*="/status/"] time:last-of-type',
+				'a[role="link"][href^="https://mobile.x.com/"][href*="/status/"] time:last-of-type',
 			].join( ',' ) );
 
 		if ( timestamp_container ) {
@@ -953,7 +953,7 @@ THE SOFTWARE.
 		//    tweet_link = null;
 		//    // ※個別ツイートを表示した場合、自身へのリンクが無い→ページのURLをhrefに持つリンクをダミーで作成し、ツイートソースラベルの前に挿入
 		//    var tweet_url = w.location.href.replace( /[?#].*$/g, '' ),
-		//        tweet_source_label = tweet.querySelector( 'a[role="link"][href*="/help.twitter.com/"]' );
+		//        tweet_source_label = tweet.querySelector( 'a[role="link"][href*="/help.x.com/"]' );
 		//
 		//    if ( tweet_source_label ) {
 		//        tweet_link = tweet_source_label.parentNode.querySelector( '.' + SCRIPT_NAME + '_tweetdetail_link' );
@@ -997,7 +997,7 @@ THE SOFTWARE.
 	//        //auth_bearer = 'AAAAAAAAAAAAAAAAAAAAANRILgAAAAAAnNwIzUejRCOuH5E6I8xnZz4puTs%3D1Zv7ttfk8LF81IUq16cHjhLTvJu4FA33AGWWjCpTnA';
 	//        auth_bearer = 'AAAAAAAAAAAAAAAAAAAAAF7aAAAAAAAASCiRjWvh7R5wxaKkFp7MM%2BhYBqM%3DbQ0JPmjU9F6ZoMhDfI4uTNAaQuTDm2uO9x3WFVr2xBZ2nhjdP0';
 	//    return fetch(
-	//        ( is_react_twitter() ? 'https://twitter.com/i/api' : 'https://api.twitter.com' ) + '/1.1/statuses/show.json?include_my_retweet=true&include_entities=true&trim_user=false&include_ext_alt_text=true&include_card_uri=true&tweet_mode=extended&id=' + encodeURIComponent( tweet_id ), {
+	//        ( is_react_twitter() ? 'https://x.com/i/api' : 'https://api.x.com' ) + '/1.1/statuses/show.json?include_my_retweet=true&include_entities=true&trim_user=false&include_ext_alt_text=true&include_card_uri=true&tweet_mode=extended&id=' + encodeURIComponent( tweet_id ), {
 	//        method: 'GET',
 	//        headers: {
 	//            'authorization' : `Bearer ${auth_bearer}`,
@@ -1109,7 +1109,7 @@ THE SOFTWARE.
 
 			return async ( tweet_id ) => {
 				const
-					url = `${is_react_page() ? 'https://twitter.com/i/api' : 'https://api.twitter.com'}/1.1/statuses/show.json?include_my_retweet=true&include_entities=true&trim_user=false&include_ext_alt_text=true&include_card_uri=true&tweet_mode=extended&id=${encodeURIComponent( tweet_id )}`,
+					url = `${is_react_page() ? 'https://x.com/i/api' : 'https://api.x.com'}/1.1/statuses/show.json?include_my_retweet=true&include_entities=true&trim_user=false&include_ext_alt_text=true&include_card_uri=true&tweet_mode=extended&id=${encodeURIComponent( tweet_id )}`,
 					options = {
 						method: 'GET',
 						headers: {
@@ -1380,10 +1380,10 @@ THE SOFTWARE.
 			download_button.click();
 			// TODO: src を画像のURL(https://pbs.twimg.com/media/*)としたIFRAME 内では、なぜかダウンロードではなく、ページ遷移されてしまい、
 			//   その上で、CSPエラーとなってしまう(Chrome 65.0.3325.162)
-			//   Refused to frame '' because it violates the following Content Security Policy directive: "frame-src 'self' https://staticxx.facebook.com https://twitter.com https://*.twimg.com
-			//     https://5415703.fls.doubleclick.net https://player.vimeo.com https://pay.twitter.com https://www.facebook.com https://ton.twitter.com https://syndication.twitter.com
-			//     https://vine.co twitter: https://www.youtube.com https://platform.twitter.com https://upload.twitter.com https://s-static.ak.facebook.com https://4337974.fls.doubleclick.net
-			//     https://8122179.fls.doubleclick.net https://donate.twitter.com".
+			//   Refused to frame '' because it violates the following Content Security Policy directive: "frame-src 'self' https://staticxx.facebook.com https://x.com https://*.twimg.com
+			//     https://5415703.fls.doubleclick.net https://player.vimeo.com https://pay.x.com https://www.facebook.com https://ton.x.com https://syndication.x.com
+			//     https://vine.co twitter: https://www.youtube.com https://platform.x.com https://upload.x.com https://s-static.ak.facebook.com https://4337974.fls.doubleclick.net
+			//     https://8122179.fls.doubleclick.net https://donate.x.com".
 
 			download_button.parentNode.removeChild( download_button );
 		} // end of _save()
@@ -1426,7 +1426,7 @@ THE SOFTWARE.
 
 
 	function get_filename_prefix( tweet_url ) {
-		return tweet_url.replace( /^https?:\/\/(?:mobile\.)?twitter\.com\/([^\/]+)\/status(?:es)?\/(\d+).*$/, '$1-$2' );
+		return tweet_url.replace( /^https?:\/\/(?:mobile\.)?x\.com\/([^\/]+)\/status(?:es)?\/(\d+).*$/, '$1-$2' );
 	} // end of get_filename_prefix()
 
 
@@ -1448,7 +1448,7 @@ THE SOFTWARE.
 			timestamp_ms = tweet_info.timestamp_ms;
 			img_urls = tweet_info.img_urls;
 
-			tweet_url = /^http/.test( tweet_url ) ? tweet_url : 'https://twitter.com' + tweet_url;
+			tweet_url = /^http/.test( tweet_url ) ? tweet_url : 'https://x.com' + tweet_url;
 
 			if ( ( ! tweet_url ) || ( ! img_urls ) || ( img_urls.length <= 0 ) ) {
 				return false;
@@ -1695,7 +1695,7 @@ THE SOFTWARE.
 
 		var img_url = w.location.href,
 			img_referrer = d.referrer,
-			is_child = /^https?:\/\/(?:tweetdeck\.|mobile\.)?twitter\.com\//.test( img_referrer ),
+			is_child = /^https?:\/\/(?:tweetdeck\.|mobile\.)?x\.com\//.test( img_referrer ),
 			link = ( is_ie() ) ? null : create_download_link( img_url );
 
 		if ( link && is_child ) {
@@ -4055,7 +4055,7 @@ THE SOFTWARE.
 					} )(),
 					all_img_objects = get_img_objects( source_container ),
 					gallery_media = ( gallery ) ? gallery.querySelector( '.Gallery-media, .js-embeditem' ) : null,
-					img_objects = ( gallery_media ) ? gallery_media.querySelectorAll( 'img.media-image, img.media-img, a.med-origlink[href^="https://ton.twitter.com"]' ) : null,
+					img_objects = ( gallery_media ) ? gallery_media.querySelectorAll( 'img.media-image, img.media-img, a.med-origlink[href^="https://ton.x.com"]' ) : null,
 					action_list = ( gallery_media ) ? gallery_media.querySelector( '.js-media-preview-container' ) : null,
 					img_urls = [],
 					all_img_urls = [];
@@ -4191,7 +4191,7 @@ THE SOFTWARE.
 								}
 							}
 							else {
-								tweet_link = tweet.querySelector( 'a[rel="url"][href^="https://twitter.com/"],a[rel="url"][href^="/"]' );
+								tweet_link = tweet.querySelector( 'a[rel="url"][href^="https://x.com/"],a[rel="url"][href^="/"]' );
 								tweet_url = tweet.getAttribute( 'data-permalink-path' ) || ( tweet_link && tweet_link.href );
 								tweet_text = tweet.querySelector( '.tweet-text,.js-tweet-text' );
 							}
@@ -4443,7 +4443,7 @@ THE SOFTWARE.
 				//} );
 				*/
 				const
-				article_selector = is_react_tweetdeck() ? 'div[data-testid="cellInnerDiv"] article[role="article"]' : 'div[data-testid="primaryColumn"] article[role="article"]';
+				   article_selector = is_react_tweetdeck() ? 'div[data-testid="cellInnerDiv"] article[role="article"]' : 'div[data-testid="primaryColumn"] article[role="article"]';
 
 				tweet_list = to_array( node.querySelectorAll( article_selector ) ).filter( ( article ) => {
 					if ( ( ( article.getAttribute( 'data-testid' ) == 'tweet' ) || article.querySelector( 'div[data-testid="tweet"]' ) ) && article.querySelector( 'div[aria-label] > img' ) ) {
@@ -5493,6 +5493,6 @@ THE SOFTWARE.
 		initialize();
 	}
 
-} )( window, document );
+	} )( window, document );
 
-// ■ end of file
+	// ■ end of file
