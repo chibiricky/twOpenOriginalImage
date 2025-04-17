@@ -4,7 +4,7 @@
 // @namespace       http://furyu.hatenablog.com/
 // @author          furyu
 // @license         MIT
-// @version         0.1.16
+// @version         0.1.18
 // @include         http://x.com/*
 // @include         https://x.com/*
 // @include         https://mobile.x.com/*
